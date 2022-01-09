@@ -1,5 +1,5 @@
 # General.
-baseURL = 'https://friendrat.com/'
+baseURL = 'https://friendrat.com'
 title = 'FriendRat'
 languageCode = 'en-us'
 
