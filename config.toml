@@ -1,0 +1,43 @@
+# General.
+baseURL = 'https://friendrat.com/'
+title = 'FriendRat'
+languageCode = 'en-us'
+
+# Body.
+theme = "Hugo-Octopress"
+paginate = 6
+
+[permalinks]
+post = "/blog/:year-:month-:day-:title/"
+
+[params]
+  subtitle = "Programming Libraries and Utilites in C++ and Rust!"
+  searchEngineURL = "https://www.google.com/search"
+
+  sidebarText = """"""
+  sidebarMenuEnabled = true
+  sidebarMenuHeader = "Recent Projects"
+
+  github = "https://github.com/FriendRat"
+  rss = true
+
+  disableReadingTime = false
+  disableGoogleFonts = false
+
+# Top menu.
+[[menu.main]]
+  Name = "Blog"
+  URL = "/"
+
+[[menu.main]]
+  Name = "Github"
+  URL = "https://github.com/FriendRat"
+
+# Side menu.
+[[menu.sidebar]]
+  Name = "contextual"
+  URL = "https://github.com/FriendRat/contextual"
+
+[[menu.sidebar]]
+  Name = "InitializableTypes"
+  URL = "https://github.com/FriendRat/InitializableTypes"
