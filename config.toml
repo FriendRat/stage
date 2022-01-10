@@ -8,7 +8,7 @@ theme = "Hugo-Octopress"
 paginate = 6
 
 [permalinks]
-post = "/blog/:year-:month-:day-:title/"
+posts = "/blog/:year-:month-:day-:title/"
 
 [params]
   subtitle = "Programming Libraries and Utilites in C++ and Rust!"
