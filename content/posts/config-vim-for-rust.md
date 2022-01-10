@@ -82,4 +82,4 @@ Now, put this config into the `coc-settings` file in `~/.config/nvim/coc-setting
 
 Now you should be able to start developing a Rust Lang project.
 
-![NVim Screenshot](/static/images/vim-main-rs.png)
+![NVim Screenshot](/images/vim-main-rs.png)
