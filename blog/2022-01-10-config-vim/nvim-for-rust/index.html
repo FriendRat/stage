@@ -1,0 +1,149 @@
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en lang=en-us>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1">
+<link href=/css/fonts.css rel=stylesheet type=text/css>
+<title>Config Vim/NVim for Rust</title>
+<link rel=stylesheet href=/css/hugo-octopress.css>
+<link rel=stylesheet href=/css/fork-awesome.min.css>
+<link href=https://friendrat.com/favicon.png rel=icon>
+<meta name=description content>
+<meta name=keywords content>
+<meta name=author content>
+<meta name=generator content="Hugo 0.91.2">
+</head>
+<body>
+<header role=banner>
+<hgroup>
+<h1><a href=https://friendrat.com/>FriendRat</a></h1>
+<h2>Programming Libraries and Utilites in C++ and Rust!</h2>
+</hgroup></header>
+<nav role=navigation>
+<fieldset class=mobile-nav>
+<select onchange="location=this.value"><option value>Navigate…</option><option value=https://friendrat.com/>» Blog</option><option value=https://github.com/FriendRat>» Github</option></select>
+</fieldset>
+<ul class=main-navigation>
+<li><a href=https://friendrat.com/ title=Blog>Blog</a></li>
+<li><a href=https://github.com/FriendRat title=Github rel="noopener noreferrer">Github</a></li>
+</ul>
+<ul class=subscription>
+<a href=https://friendrat.com/index.xml target=_blank type=application/rss+xml title=RSS rel="noopener noreferrer"><i class="fa fa-rss-square fa-lg"></i></a>
+</ul>
+<form action=https://www.google.com/search method=get target=_blank rel="noopener noreferrer">
+<fieldset role=search>
+<input class=search type=text name=q results=0 placeholder=Search>
+<input type=hidden name=q value=site:https://friendrat.com/>
+</fieldset>
+</form>
+</nav>
+<div id=main>
+<div id=content>
+<div>
+<article class=hentry role=article>
+<header>
+<p class=meta>Jan 10, 2022
+- 2 minute read
+</p>
+<h1 class=entry-title>
+<a href=https://friendrat.com/blog/2022-01-10-config-vim/nvim-for-rust/>Config Vim/NVim for Rust</a>
+</h1>
+</header>
+<div class=entry-content>
+<p>We have several options to Configure VIM to support RustLang similar to IDEs. The easiest and quickest one is
+to use
+<a href=https://github.com/neoclide/coc.nvim target=_blank rel=noopener>CocVim</a> +
+<a href=https://github.com/rust-analyzer/rust-analyzer target=_blank rel=noopener>Rust-Analyzer</a>.</p>
+<p>CocVim is: Make your Vim/Neovim as smart as VSCode.
+Rust-Analyzer is: rust-analyzer is a modular compiler frontend for the Rust language. It is a part of a larger rls-2.0 effort to create excellent IDE support for Rust.</p>
+<p>In this post, I&rsquo;m using ArchLinux, but these steps shouldn&rsquo;t be much different in other distributions.</p>
+<p>We need to install the required packages first:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sudo pacman -S neovim nodejs rust-analyzer
+</code></pre></div><blockquote>
+<p>You can install the vim package if you want. I&rsquo;m using neovim.</p>
+</blockquote>
+<p>If you already have a Vim package manager, you can skip this step.
+Here I&rsquo;m going to install
+<a href=https://github.com/junegunn/vim-plug target=_blank rel=noopener>Plug</a>, one of Vim&rsquo;s popular package managers.</p>
+<p>For Vim:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ curl -fLo ~/.vim/autoload/plug.vim --create-dirs <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+</code></pre></div><p>For NeoVim:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sh -c <span style=color:#e6db74>&#39;curl -fLo &#34;${XDG_DATA_HOME:-$HOME/.local/share}&#34;/nvim/site/autoload/plug.vim --create-dirs \
+</span><span style=color:#e6db74>       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim&#39;</span>
+</code></pre></div><p>Then put this in your config file.
+For Vim the path is <code>~/.vimrc</code> and for NeoVim is <code>~/.config/nvim/init.vim</code>:</p>
+<pre tabindex=0><code>call plug#begin()
+&quot; Make sure you use single quotes
+
+&quot; Initialize plugin system
+call plug#end()
+</code></pre><blockquote>
+<p>Note: here, we didn&rsquo;t introduce any packages yet.</p>
+</blockquote>
+<p>Then, install CocVim:</p>
+<p>Open the config file and put these lines in the middle of the <code>begin()</code> and <code>end()</code> blocks, like this:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>call plug#begin<span style=color:#f92672>()</span>
+<span style=color:#e6db74>&#34; Make sure you use single quotes
+</span><span style=color:#e6db74>
+</span><span style=color:#e6db74>&#34;</span> Use release branch <span style=color:#f92672>(</span>recommend<span style=color:#f92672>)</span>
+Plug <span style=color:#e6db74>&#39;neoclide/coc.nvim&#39;</span>, <span style=color:#f92672>{</span><span style=color:#e6db74>&#39;branch&#39;</span>: <span style=color:#e6db74>&#39;release&#39;</span><span style=color:#f92672>}</span>
+
+<span style=color:#e6db74>&#34; Or build from source code by using yarn: https://yarnpkg.com
+</span><span style=color:#e6db74>Plug &#39;neoclide/coc.nvim&#39;, {&#39;branch&#39;: &#39;master&#39;, &#39;do&#39;: &#39;yarn install --frozen-lockfile&#39;}
+</span><span style=color:#e6db74>
+</span><span style=color:#e6db74>&#34;</span> Initialize plugin system
+call plug#end<span style=color:#f92672>()</span>
+</code></pre></div><p>Then close the Vim/NVim and rerun it. Now run <code>:PlugInstall</code> command, and you&rsquo;ll see it will install CocVim.</p>
+<p>When it&rsquo;s ready, then you can start installing CocVim Rust-Analyzer plugin by this command:</p>
+<pre tabindex=0><code>:CocInstall coc-rust-analyzer
+</code></pre><blockquote>
+<p>If you see an error about the command not being found and so on, you probably need to restart the Vim/NVim to let it find the new packages.</p>
+</blockquote>
+<p>The last step is config <code>rust-analyzer</code> path to the CocVim <strong>in case of error</strong>.
+Now, put this config into the <code>coc-settings</code> file in <code>~/.config/nvim/coc-settings.json</code>:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;rust-analyzer.server.path&#34;</span>: <span style=color:#e6db74>&#34;rust-analyzer&#34;</span>
+}
+</code></pre></div><p>Now you should be able to start developing a Rust Lang project.</p>
+<p><img src=/static/images/vim-main-rs.png alt="NVim Screenshot"></p>
+</div>
+<footer>
+<p class=meta>
+<span class="byline author vcard">Posted by <span class=fn></span></span>
+<time>Jan 10, 2022</time>
+</span>
+</p>
+<p class=meta>
+</p>
+</footer>
+</article>
+</div>
+<aside class="sidebar thirds">
+<section class="first odd">
+<p>
+</p>
+</section>
+<ul class=sidebar-nav>
+<li class=sidebar-nav-item>
+<a target=_blank rel="noopener noreferrer" href=https://github.com/FriendRat title=https://github.com/FriendRat><i class="fa fa-github fa-3x"></i></a>
+</li>
+</ul>
+<section class=odd>
+<h1>Recent Projects</h1>
+<li>
+<a href=https://github.com/FriendRat/contextual title=contextual>contextual</a>
+</li>
+<li>
+<a href=https://github.com/FriendRat/InitializableTypes title=InitializableTypes>InitializableTypes</a>
+</li>
+</section>
+</aside>
+</div>
+</div>
+<footer role=contentinfo>
+<p>Copyright &copy; 2022 - <a href=https://friendrat.com/license/>License</a> -
+<span class=credit>Powered by <a target=_blank href=https://gohugo.io rel="noopener noreferrer">Hugo</a> and <a target=_blank href=https://github.com/parsiya/hugo-octopress/ rel="noopener noreferrer">Hugo-Octopress</a> theme.
+</p>
+</footer>
+</body>
+</html>
